@@ -63,12 +63,7 @@ public class Main {
         for (Map.Entry<String, Integer> entry : students.entrySet()) { // keys and values
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
-
-
-
-
     }
-
 }
 
 
