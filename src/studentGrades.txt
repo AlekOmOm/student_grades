@@ -1,0 +1,9 @@
+
+// Create a HashMap to store student names and their grades
+// Add some student grades
+// Display all student grades
+// Update a student's grade with put.
+// NB: only one entry for Alice
+// Remove a student's grade
+// Check if a student is in the HashMap
+// Display all student grades after updates
