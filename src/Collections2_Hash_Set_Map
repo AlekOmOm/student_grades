@@ -1,0 +1,155 @@
+# Java Collections Part 2: HashMap and HashSet Notes
+
+
+content:
+- Hashing Fundamentals
+- Hash Tables
+- Collision Handling
+- HashMap vs HashSet
+- Implementation Details
+- Working with HashMaps
+-- Basic Operations
+-- Iteration Methods
+- Best Practices
+-- Key Considerations
+-- Performance Optimization
+- Common Pitfalls and Solutions
+-- Mutable Keys
+-- Null Handling
+
+## Introduction
+This document covers the core concepts of HashMap and HashSet in Java, including hashing fundamentals, implementation details, and best practices.
+
+## Core Concepts
+
+### Hashing Fundamentals
+- Hashing is a technique that maps values to integer indices in an array
+- A hash function is an algorithm that converts values to array indices
+- The basic integer hash function is: index = value % array_length
+- In Java, every object has a hashCode() method that returns an integer value
+
+### Hash Tables
+Hash tables are the underlying data structure for both HashMap and HashSet implementations:
+- Use an array to store elements via hashing
+- Performance is affected by the load factor (number of elements / array size)
+- Provide O(1) average case time complexity for add/remove/contains operations
+
+### Collision Handling
+When multiple elements hash to the same index (collision), there are several resolution methods:
+
+1. Linear Probing
+   - Check the next available slot in the array
+   - Simple but can lead to clustering
+   
+2. Chaining
+   - Maintain a linked list at each index
+   - Benefits:
+     * Avoids clustering problems
+     * No space limitations
+     * Performs better with high load factors
+
+### HashMap vs HashSet
+Both use hash tables but serve different purposes:
+- HashSet: Stores unique elements only
+- HashMap: Stores key-value pairs
+- Neither maintains insertion order
+- Both use hashing for element organization
+
+## Implementation Details
+
+### HashMap Internal Structure
+```
+Index | Content
+-------------------
+0     | null
+1     | Entry("key1", value1) -> Entry("key2", value2)
+2     | null
+3     | Entry("key3", value3)
+```
+
+### Key Operations and Time Complexity
+
+HashMap Operations:
+- put(K key, V value) - O(1) average case
+- get(K key) - O(1) average case
+- remove(K key) - O(1) average case
+- containsKey(K key) - O(1) average case
+
+HashSet Operations:
+- add(E element) - O(1) average case
+- remove(E element) - O(1) average case
+- contains(E element) - O(1) average case
+
+## Working with HashMaps
+
+### Basic Operations
+```java
+// Creation
+HashMap<String, Integer> grades = new HashMap<>();
+
+// Adding entries
+grades.put("Alice", 85);
+
+// Retrieving values
+int grade = grades.get("Alice");
+
+// Removing entries
+grades.remove("Alice");
+```
+
+### Iteration Methods
+```java
+// Using Entry Set
+for (Map.Entry<String, Integer> entry : grades.entrySet()) {
+    String student = entry.getKey();
+    int grade = entry.getValue();
+}
+
+// Using Key Set
+for (String student : grades.keySet()) {
+    int grade = grades.get(student);
+}
+```
+
+## Best Practices
+
+### Key Considerations
+1. Use immutable objects as keys when possible
+2. Override hashCode() and equals() for custom key objects
+3. Set initial capacity when size is known
+4. Consider the load factor for performance tuning
+
+### Performance Optimization
+1. Avoid frequent resizing operations
+2. Monitor and adjust load factor as needed
+3. Consider collision probability in hash function design
+
+## Common Pitfalls and Solutions
+
+### 1. Mutable Keys
+Incorrect:
+```java
+HashMap<List<String>, Integer> map = new HashMap<>();  // Don't use mutable keys
+```
+
+Correct:
+```java
+HashMap<String, Integer> map = new HashMap<>();  // Use immutable keys
+```
+
+### 2. Null Handling
+- HashMap allows null keys and values
+- HashSet allows a single null element
+```java
+grades.put(null, null);  // Legal in HashMap
+set.add(null);          // Legal in HashSet
+```
+
+### 3. Initial Capacity
+```java
+// Better performance for known size
+HashMap<String, Integer> grades = new HashMap<>(expectedSize);
+```
+
+## Summary
+HashMap and HashSet are fundamental collection types in Java that use hashing for efficient data storage and retrieval. Understanding their internal workings, proper usage patterns, and common pitfalls is essential for effective Java programming.
